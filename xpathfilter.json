@@ -1,0 +1,256 @@
+// Name:XPathFilter.json 
+// Author:Robin Granberg @ Microsoft
+// Contains Xpath queries for event log search
+// "Name": is the name of the filter
+// "Query": is the XPath query
+// The XML string should not conain double quotation, carriage return or line feed.
+// Replace double qoutation with single quotation and remove carriage return and line feed.
+{
+    "Queries": 
+        [     
+            {
+                "Name": "All events from System Log",
+                "Category": "System",
+                "Query": "<QueryList><Query Id='0' Path='System'><Select Path='System'>*</Select></Query></QueryList>"
+            },
+            
+            {
+                "Name": "All events from Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Process Created from Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=1)]]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "Network connection detected from Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=3)]]</Select></Query></QueryList>"
+            },   
+            
+            {
+                "Name": "Image loaded from Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=7)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "File created from Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=11)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Windows Start Event",
+                "Category": "System",
+                "Query": "<QueryList><Query Id='0' Path='System'><Select Path='System'>*[System[(EventID=6009)]]</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Single EventID",
+                "Category": "Template",
+                "Query": "<!-- Replace REPLACELOG and REPLACEID --><QueryList><Query Id='0' Path='REPLACELOG'><Select Path='REPLACELOG'>*[System[(EventID=REPLACEID)]]</Select></Query></QueryList>"
+            },
+    
+            {
+                "Name": "Exclude EventID",
+                "Category": "Template",
+                "Query": "<!-- Replace REPLACELOG and REPLACEID --><QueryList><Query Id='0' Path='REPLACELOG'><Select Path='REPLACELOG'>*</Select><Suppress Path='REPLACELOG'>*[System[(EventID=REPLACEID)]]</Suppress></Query></QueryList>"
+            },
+
+            {
+                "Name": "Event level critical and Error",
+                "Category": "Template",
+                "Query": "<!-- Replace REPLACELOG --><QueryList><Query Id='0' Path='REPLACELOG'><Select Path='REPLACELOG'>*[System[(Level=1  or Level=2)]]</Select></Query></QueryList>"
+            }, 
+    
+            {
+                "Name": "EventID and Provider",
+                "Category": "Template",
+                "Query": "<!-- Replace REPLACELOG and REPLACEID --><QueryList><Query Id='0' Path='REPLACELOG'><Select Path='REPLACELOG'>*[System[Provider[@Name='REPLACEPROVIDER'] and (EventID=REPLACEID)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "EventID with time range",
+                "Category": "Template",
+                "Query": "<!-- Replace REPLACELOG ,REPLACEID and REPLACEDATE --><QueryList>  <Query Id='0' Path='REPLACELOG'><Select Path='REPLACELOG'>*[System[(EventID=REPLACEID) and TimeCreated[@SystemTime&gt;='REPLACEDATE' and @SystemTime&lt;='REPLACEDATE']]]</Select>  </Query></QueryList>"
+            },
+
+            {
+                "Name": "Logon event",
+                "Category": "Logon",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (EventID=4624 or EventID=4648)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Logon event by user name",
+                "Category": "Logon",
+                "Query": "<!-- Replace REPLACEUSERNAME --><QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=4624]] and *[EventData[Data[@Name='TargetUserName']='REPLACEUSERNAME']]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Logon event by user name in within time range",
+                "Category": "Logon",
+                "Query": "<!-- Replace REPLACEUSERNAME and REPLACEDATE  --><QueryList><Query Id='0' Path='Security'><Select Path='Security'> *[System[(EventID=4624) and TimeCreated[@SystemTime&gt;='REPLACEDATE' and @SystemTime&lt;='REPLACEDATE']]] and *[EventData[Data[@Name='TargetUserName']='REPLACEUSERNAME']]</Select></Query></QueryList>"
+            },  
+            
+            {
+                "Name": "Logon events except system",
+                "Category": "Logon",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=4624]] and *[EventData[Data[@Name='TargetUserName']!='SYSTEM']]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Special Group Logon event",
+                "Category": "Logon",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and EventID=4964]]</Select></Query></QueryList>"
+            },  
+
+                        
+            {
+                "Name": "Directory Service Change",
+                "Category": "Directory Services",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5136 or EventID=5137 or EventID=5138 or EventID=5139 or EventID=5141]]</Select></Query></QueryList>"
+            },            
+
+            {
+                "Name": "Directory Service Change by User",
+                "Category": "Directory Services",
+                "Query": "<!-- Replace REPLACEUSERNAME --><QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5136 or EventID=5137 or EventID=5138 or EventID=5139 or EventID=5141]] and *[EventData[Data[@Name='SubjectUserName']='REPLACEUSERNAME ']]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Directory Service Change object created",
+                "Category": "Directory Services",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5137]]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "Directory Service Change object deleted",
+                "Category": "Directory Services",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5141]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Directory Service Change object undeleted",
+                "Category": "Directory Services",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5138]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Directory Service Change object modified",
+                "Category": "Directory Services",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5136]]</Select></Query></QueryList>"
+            },  
+            
+            {
+                "Name": "Accepted and dropped Inbound  firewall connection",
+                "Category": "Firewall",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (EventID=5152 or EventID=5156 or EventID=5157)]] and *[EventData[Data[@Name='Direction'] and (Data='%%14592')]]</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Accepted Inbound firewall connection",
+                "Category": "Firewall",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and Task = 12810 and EventID=5156]] 	and	*[EventData[Data[@Name='Direction']='%%14592']]</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Accepted Inbound Dst Port Number firewall connection",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEPORT--><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and Task = 12810 and EventID=5156]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='DestPort']='REPLACEPORT']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Accepted Inbound firewall connection from IP address",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEIP --><QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and Task = 12810 and EventID=5156]] and *[EventData[Data[@Name='SourceAddress']='REPLACEIP']] and *[EventData[Data[@Name='Direction']='%%14592']]</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Accepted Inbound Dst Port Number firewall connection from IP address",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEIP and REPLACEPORT--><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and Task = 12810 and EventID=5156]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='DestPort']='REPLACEPORT']] and *[EventData[Data[@Name='SourceAddress']='REPLACEIP']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound firewall connection",
+                "Category": "Firewall",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)]] 	and	*[EventData[Data[@Name='Direction']='%%14592']]	and	*[EventData[Data[@Name='Protocol'] and (Data=6 or Data=17)]]    </Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound firewall connection with time rance",
+                "Category": "Firewall",
+                "Query": "<!-- Replace the two REPLACEDATE,mind the DateZone difference --><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)  and TimeCreated[@SystemTime&gt;='REPLACEDATE' and @SystemTime&lt;='REPLACEDATE']]] 	and	*[EventData[Data[@Name='Direction']='%%14592']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound firewall connection from IP address",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEIP --><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='SourceAddress']='REPLACEIP']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound Dst Port Number firewall connection",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEPORT--><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='Protocol'] and (Data=6 or Data=17)]] and *[EventData[Data[@Name='DestPort']='REPLACEPORT']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound Src Port Number firewall connection",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEPORT--><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='Protocol'] and (Data=6 or Data=17)]] and *[EventData[Data[@Name='SourcePort']='REPLACEPORT']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "Dropped Inbound Dst Port Number firewall connection from IP address",
+                "Category": "Firewall",
+                "Query": "<!-- Replace REPLACEIP and REPLACEPORT--><QueryList>
+<Query Id='0' Path='Security'>
+<Select Path='Security'>*[System[Provider[@Name='Microsoft-Windows-Security-Auditing'] and (Task=12809 or Task=12810) and (EventID=5152 or EventID=5157)]]  and *[EventData[Data[@Name='Direction']='%%14592']] and *[EventData[Data[@Name='Protocol'] and (Data=6 or Data=17)]] and *[EventData[Data[@Name='DestPort']='REPLACEPORT']] and *[EventData[Data[@Name='SourceAddress']='REPLACEIP']]</Select>
+</Query>
+</QueryList>"
+            },
+
+            {
+                "Name": "List Windows Update Client events in System log",
+               "Category": "Windows Update",
+                "Query": "<QueryList><Query Id='0' Path='System'><Select Path='System'>*[System[Provider[@Name='Microsoft-Windows-WindowsUpdateClient']]]</Select></Query></QueryList>"
+            },
+
+            {
+                "Name": "List Windows Update Client events in WindowsUpdateClient/Operational log",
+                "Category": "Windows Update",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-WindowsUpdateClient/Operational'><Select Path='Microsoft-Windows-WindowsUpdateClient/Operational'>*[System[Provider[@Name='Microsoft-Windows-WindowsUpdateClient']]]</Select></Query></QueryList>"
+            }
+        ]
+}
