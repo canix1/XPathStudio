@@ -10,4 +10,4 @@ Have a couple of Sysmon Xpath queries available. If you have your own please sha
 #### Remember that you need to run the script as an elevated admin to read the Security and Sysmon log.
 #### This is not a log collector! No database is used so if a lot data is retrieved performance will be affected.
 
-![](https://github.com/canix1/ADACLScanner/blob/master/XPathStudio.png)
+![](https://github.com/canix1/XPathStudio/blob/master/XPathStudio.png)
