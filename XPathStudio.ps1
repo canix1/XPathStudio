@@ -1764,7 +1764,21 @@ if($txtBoxXML.Text -ne "")
                     }
                     else
                     {
-                            Receive-Job $job -ErrorAction SilentlyContinue | %{[void]$arrEventLogs.add($_)} 
+                            try
+                            {
+                                Receive-Job $job -ErrorAction stop | %{[void]$arrEventLogs.add($_)} 
+                            }
+                            catch
+                            {
+                                if($_.Exception.Message.tostring() -match "Attempted to perform an unauthorized operation.")
+                                {                  
+                                    $Window.Dispatcher.Invoke([action]{$global:observableCollection.Insert(0,(LogMessage -strMessage  "$($job.Name): Attempted to perform an unauthorized operation!" -strType "Error" -DateStamp ))},"Render")
+                                }  
+                                else
+                                {
+                                    $Window.Dispatcher.Invoke([action]{$global:observableCollection.Insert(0,(LogMessage -strMessage  "$($job.Name): Failed! Could not retrieve any event!" -strType "Error" -DateStamp ))},"Render")
+                                }            
+                            }
 
                     }
                 }
