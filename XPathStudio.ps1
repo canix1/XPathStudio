@@ -1190,7 +1190,140 @@ $xamlBase =@"
             </DataGrid>
         </StackPanel> 
         </Grid>
-        </TabItem>               
+        </TabItem>          
+        <TabItem x:Name="tabGPO" Header="Group Policy View" Height="22" VerticalAlignment="Top"  >
+        <Grid Background="AliceBlue" HorizontalAlignment="Left" VerticalAlignment="Top" Height="570">
+        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Horizontal">
+        <Label x:Name="lblGPO" Margin="0,0,0,0"  Content="Group Policy Event IDs:" FontWeight="Bold"   FontSize="14"  HorizontalAlignment="LEft" Foreground="#000000"/>
+        <Button x:Name="btnExportGPO" Content="Export CSV" HorizontalAlignment="Center" Margin="50,0,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnExportGPOExcel" Content="Export Excel" HorizontalAlignment="Center" Margin="50,0,0,0" VerticalAlignment="Top" Width="75"/>
+        </StackPanel>
+            <DataGrid x:Name="dgGPOIDs" HorizontalAlignment="Left" Margin="0,0,0,10" Width="750"  MaxHeight="500" GridLinesVisibility="None" AlternationCount="2" IsReadOnly="True" FontSize="12">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow"> 
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding hidden}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+                <DataGrid.Resources>
+                    <Style TargetType="TextBox">
+                        <Style.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>   
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header='MachineName' Width='100' SortMemberPath='MachineName' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding MachineName}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            <DataGridTemplateColumn Header='TimeCreated' Width='SizeToCells' SortMemberPath='TimeCreated' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding TimeCreated, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header='Event Id' Width='SizeToCells' SortMemberPath='Id' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding Id}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header='Category' Binding='{Binding Id}' Width='SizeToCells' >
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Id}" Value="5136">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                    <TextBox Text="Modified" BorderBrush='{x:Null}' Background='{x:Null}'/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Id}" Value="5137">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                    <TextBox Text="Created" BorderBrush='{x:Null}' Background='{x:Null}'/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Id}" Value="5138">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                    <TextBox Text="Undeleted" BorderBrush='{x:Null}' Background='{x:Null}'/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Path=Id}" Value="5141">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DataGridCell">
+                                                    <TextBox Text="Deleted" BorderBrush='{x:Null}' Background='{x:Null}'/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>  
+                <DataGridTemplateColumn Header='User' Width='SizeToCells' SortMemberPath='User' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding User}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>                   
+                <DataGridTemplateColumn Header='GPO Name' Width='SizeToCells' SortMemberPath='GPO Name' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding GPO Name}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>  
+                <DataGridTemplateColumn Header='GUID' Width='SizeToCells' SortMemberPath='GUID' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding GUID}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>  
+                <DataGridTemplateColumn Header='OjbectClass' Width='SizeToCells' SortMemberPath='ObjectClass' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding ObjectClass}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>  
+                <DataGridTemplateColumn Header='AttributeLDAPDisplayName' Width='SizeToCells' SortMemberPath='AttributeLDAPDisplayName' >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text='{Binding AttributeLDAPDisplayName}' BorderBrush='{x:Null}' Background='{x:Null}' />
+                            </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>  
+              </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel> 
+        </Grid>
+        </TabItem>                    
         </TabControl>
         </StackPanel>
     </Grid>
@@ -1572,6 +1705,37 @@ $Window.Dispatcher.Invoke([action]{$global:observableCollection.Insert(0,(LogMes
 
 })
 
+
+$btnExportGPO.add_Click({
+$date= get-date -uformat %Y%m%d_%H%M%S
+$GPOCSVFile = $CurrentFSPath + "\GPOEvents_" +$date+ ".csv"
+If ((Test-Path $GPOCSVFile) -eq $true)
+{
+	Remove-Item $GPOCSVFile
+}
+
+#Export results to CSV file
+$dgGPOIDs.Items | Export-Csv $GPOCSVFile  -NoTypeInformation -Encoding UTF8 -Force
+
+$Window.Dispatcher.Invoke([action]{$global:observableCollection.Insert(0,(LogMessage -strMessage "Results saved to $GPOCSVFile" -strType "Info" -DateStamp ))},"Render")                        
+
+})
+
+$btnExportGPOExcel.add_Click({
+$date= get-date -uformat %Y%m%d_%H%M%S
+$strGPOFileEXCEL = $CurrentFSPath + "\GPOEvents_" +$date+ ".xlsx"
+If ((Test-Path $strGPOFileEXCEL) -eq $true)
+{
+	Remove-Item $strGPOFileEXCEL
+}
+
+#Export results to CSV file
+$dgGPOIDs.Items | Export-Excel -path $strGPOFileEXCEL -WorkSheetname "GPOEvent" -BoldTopRow -TableStyle Medium2 -TableName "gpotbl" -NoLegend -AutoSize -FreezeTopRow 
+
+$Window.Dispatcher.Invoke([action]{$global:observableCollection.Insert(0,(LogMessage -strMessage "Results saved to $strGPOFileEXCEL" -strType "Info" -DateStamp ))},"Render")                        
+
+})
+
 $btnRun.add_Click({
 
 #Clear Item from grid
@@ -1594,6 +1758,12 @@ While ($dgSysmonIDs.Items.count -gt 0)
 {
     $dgSysmonIDs.Items.Remove($dgSysmonIDs.Items[0])
 }
+#Clear Item from grid
+While ($dgGPOIDs.Items.count -gt 0)
+{
+    $dgGPOIDs.Items.Remove($dgGPOIDs.Items[0])
+}
+
 if($txtBoxXML.Text -ne "")
 {
     $XpathFilter = $txtBoxXML.Text
@@ -2042,6 +2212,72 @@ if($txtBoxXML.Text -ne "")
                                     }
                                     else
                                     {
+                                    [XML]$EventRecordXML = $EventRecord.xml
+                                     If (($EventRecord.ID -eq '5136') -or ($EventRecord.ID -eq '5137') -or ($EventRecord.ID -eq '5138') -or ($EventRecord.ID -eq '5141') -and( $EventRecordXML.SelectSingleNode("//*[@Name='ObjectClass']")."#text" = "groupPolicyContainer"))
+                                    {
+                                           $bolGPOEvents = $TRUE
+                                           #.EventRecord
+                                           
+                                           $EventObj = New-Object psobject
+                                           $EventObj | Add-Member noteproperty MachineName ($EventRecord.MachineName)
+                                           $EventObj | Add-Member noteproperty Id ($EventRecord.Id)
+                                           $EventObj | Add-Member noteproperty TimeCreated ($EventRecord.TimeCreated)
+                                           $EventObj | Add-Member noteproperty User $EventRecordXML.SelectSingleNode("//*[@Name='SubjectUserName']")."#text"
+                                           $GPO = $EventRecordXML.SelectSingleNode("//*[@Name='ObjectDN']")."#text"
+                                           $strGUID = $($GPO.split("{")[1].split("}")[0])
+                                           try{
+                                               $strGPOName = $strGPOName = (Get-GPO -Guid $strGUID -ErrorAction stop).DisplayName
+                                           }
+                                           catch
+                                           {
+                                                   $strGPOName = "<GPO not found>"
+                                           }
+                                           $EventObj | Add-Member noteproperty 'GPO Name' $strGPOName
+                                           $EventObj | Add-Member noteproperty GUID $strGUID
+                                           $EventObj | Add-Member noteproperty ObjectClass $EventRecordXML.SelectSingleNode("//*[@Name='ObjectClass']")."#text"
+                                           $EventObj | Add-Member noteproperty AttributeLDAPDisplayName $EventRecordXML.SelectSingleNode("//*[@Name='AttributeLDAPDisplayName']")."#text"
+                                           $EventObj | Add-Member noteproperty hidden $false
+
+                                            if($txtProp.text -and $chkBoxDisplayFilter.IsChecked)
+                                            {   
+                                                $EventObj.hidden = $true
+                                                Switch ($lbOperator.SelectedItem)
+                                                {
+                                                    "LIKE"
+                                                    {
+                                                        $script_block = {$EventObj.$($txtProp.Text) -like $txtString.Text}
+                                                    }
+                                                    "EQ"
+                                                    {
+                                                        $script_block = {$EventObj.$($txtProp.Text) -eq $txtString.Text}
+                                                    }
+                                                    "NE"
+                                                    {
+                                                        $script_block = {$EventObj.$($txtProp.Text) -ne $txtString.Text}
+                                                    }
+                                                    "NOTLIKE"
+                                                    {
+                                                        $script_block = {$EventObj.$($txtProp.Text) -notlike $txtString.Text}    
+                                                    }
+                                                    default
+                                                    {
+                                                        $script_block = {$EventObj.$($txtProp.Text) -like $txtString.Text}                   
+                                                    }
+                                                }
+
+                                                if($script_block.Invoke())
+                                                {
+                                                    $EventObj.hidden = $false
+                                                    $DisplayFilterResult = $true
+                                                    $FilterCount++
+                                                }
+                                            }
+                                            
+                                            [void]$dgGPOIDs.AddChild($EventObj)
+                                            
+                                    }
+                                    else
+                                    {
                                         #.EventRecord
                                         [XML]$EventRecordXML = $EventRecord.xml
                                         $EventObj = New-Object psobject
@@ -2089,7 +2325,7 @@ if($txtBoxXML.Text -ne "")
                                         }
                                         
                                         [void]$dgEventIDs.AddChild($EventObj)
-                                        
+                                        }
                                     }
                                 }
                             #####
@@ -2157,8 +2393,16 @@ else
         }
         else
         {
-            #Switch focus to standard tab
-            $tabViews.SelectedIndex = 0
+            if($bolGPOEvents)
+            {
+                #Switch focus to FW tab
+                $tabViews.SelectedIndex = 4
+            }
+            else
+            {
+                #Switch focus to standard tab
+                $tabViews.SelectedIndex = 0
+            }
         }
     }
 }
@@ -2206,6 +2450,7 @@ End
     $dgFWEventIDs.Width = $([System.Windows.SystemParameters]::PrimaryScreenWidth - ([System.Windows.SystemParameters]::PrimaryScreenWidth * 0.02))
     $dgLogonIDs.Width = $([System.Windows.SystemParameters]::PrimaryScreenWidth - ([System.Windows.SystemParameters]::PrimaryScreenWidth * 0.02))
     $dgSysmonIDs.Width = $([System.Windows.SystemParameters]::PrimaryScreenWidth - ([System.Windows.SystemParameters]::PrimaryScreenWidth * 0.02))
+    $dgGPOIDs.Width = $([System.Windows.SystemParameters]::PrimaryScreenWidth - ([System.Windows.SystemParameters]::PrimaryScreenWidth * 0.02))
     $txtBoxXML.Width = $([System.Windows.SystemParameters]::PrimaryScreenWidth - ([System.Windows.SystemParameters]::PrimaryScreenWidth * 0.02))
     }
     $Window.ShowDialog() | Out-Null
