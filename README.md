@@ -7,3 +7,4 @@ Run against you local machine or a list of hosts. Do your filtering in XPath and
 
 Have a couple of Sysmon Xpath queries available. If you have your own please share and I will update the .json file.
 
+#### Remember that you need to run the script as an elevated admin to read the Security and Sysmon log.
