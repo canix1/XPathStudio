@@ -15,33 +15,99 @@
             },
             
             {
-                "Name": "All events from Sysmon Log",
+                "Name": "All events",
                 "Category": "Sysmon",
                 "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*</Select></Query></QueryList>"
             },
 
             {
-                "Name": "Process Created from Sysmon Log",
+                "Name": "Process Created",
                 "Category": "Sysmon",
                 "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=1)]]</Select></Query></QueryList>"
             }, 
 
             {
-                "Name": "Network connection detected from Sysmon Log",
+                "Name": "Process Created by user name",
+                "Category": "Sysmon",
+                "Query": "<!-- Replace REPLACEUSERNAME  --><QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=1)]] and *[EventData[Data[@Name='User']='REPLACEUSERNAME']]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Process Created by image",
+                "Category": "Sysmon",
+                "Query": "<!-- Replace REPLACEIMAGE  --><QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=1)]] and *[EventData[Data[@Name='Image']='REPLACEIMAGE']]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "File creation time changed",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=2)]]</Select></Query></QueryList>"
+            },   
+
+            {
+                "Name": "Network connection detected",
                 "Category": "Sysmon",
                 "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=3)]]</Select></Query></QueryList>"
-            },   
-            
+            }, 
+
             {
-                "Name": "Image loaded from Sysmon Log",
+                "Name": "Network connection detected by user name",
+                "Category": "Sysmon",
+                "Query": "<!-- Replace REPLACEUSERNAME --><QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=3)]] and *[EventData[Data[@Name='User']='REPLACEUSERNAME']]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "Network connection detected by destination port",
+                "Category": "Sysmon",
+                "Query": "<!-- Replace REPLACEPORT  --><QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=3)]] and *[EventData[Data[@Name='DestinationPort']='REPLACEPORT']]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "Network connection detected by image",
+                "Category": "Sysmon",
+                "Query": "<!-- Replace REPLACEIMAGE  --><QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=3)]] and *[EventData[Data[@Name='Image']='REPLACEIMAGE']]</Select></Query></QueryList>"
+            },             
+
+            {
+                "Name": "Sysmon service state changed",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=4)]]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "File creation time changed",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=5)]]</Select></Query></QueryList>"
+            }, 
+
+            {
+                "Name": "Driver loaded",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=6)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Image loaded",
                 "Category": "Sysmon",
                 "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=7)]]</Select></Query></QueryList>"
             },  
 
             {
-                "Name": "File created from Sysmon Log",
+                "Name": "File created",
                 "Category": "Sysmon",
                 "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=11)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Pipe Created",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=17)]]</Select></Query></QueryList>"
+            },  
+
+            {
+                "Name": "Pipe Connected Sysmon Log",
+                "Category": "Sysmon",
+                "Query": "<QueryList><Query Id='0' Path='Microsoft-Windows-Sysmon/Operational'><Select Path='Microsoft-Windows-Sysmon/Operational'>*[System[(EventID=18)]]</Select></Query></QueryList>"
             },  
 
             {
