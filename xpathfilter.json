@@ -1,5 +1,5 @@
 // Name:XPathFilter.json 
-// Author:Robin Granberg @ Microsoft
+// Author:Robin Granberg (robin.g@home.se)
 // Contains Xpath queries for event log search
 // "Name": is the name of the filter
 // "Query": is the XPath query
@@ -163,6 +163,12 @@
                 "Category": "Logon",
                 "Query": "<!-- Replace REPLACEUSERNAME and REPLACEDATE  --><QueryList><Query Id='0' Path='Security'><Select Path='Security'> *[System[(EventID=4624) and TimeCreated[@SystemTime&gt;='REPLACEDATE' and @SystemTime&lt;='REPLACEDATE']]] and *[EventData[Data[@Name='TargetUserName']='REPLACEUSERNAME']]</Select></Query></QueryList>"
             },  
+
+            {
+                "Name": "Logon over trust outgoing",
+                "Category": "Logon",
+                "Query": "<!-- Replace REPLACEDOMAIN  --><QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=4769]] and *[EventData[Data[@Name='ServiceName']='REPLACEDOMAIN']]</Select></Query></QueryList>"
+            },              
             
             {
                 "Name": "Logon events except system",
@@ -211,8 +217,14 @@
                 "Name": "Directory Service Change object modified",
                 "Category": "Directory Services",
                 "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5136]]</Select></Query></QueryList>"
+            },
+              
+            {
+                "Name": "Group Policy modifications",
+                "Category": "Group Policy",
+                "Query": "<QueryList><Query Id='0' Path='Security'><Select Path='Security'>*[System[EventID=5136 or EventID=5137 or EventID=5138 or EventID=5139 or EventID=5141]] and *[EventData[Data[@Name='ObjectClass']='groupPolicyContainer']]</Select></Query></QueryList>"
             },  
-            
+
             {
                 "Name": "Accepted and dropped Inbound  firewall connection",
                 "Category": "Firewall",
